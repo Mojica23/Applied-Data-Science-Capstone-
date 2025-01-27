@@ -1,4 +1,3 @@
-# Import required libraries
 import pandas as pd
 import dash
 import dash_html_components as html
@@ -6,7 +5,7 @@ import dash_core_components as dcc
 from dash.dependencies import Input, Output
 import plotly.express as px
 
-# Read the airline data into pandas dataframe
+# Create dataframe
 file = 'https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DS0321EN-SkillsNetwork/datasets/spacex_launch_dash.csv'
 spacex_df = pd.read_csv(file)
 max_payload = spacex_df['Payload Mass (kg)'].max()
@@ -21,7 +20,7 @@ app.layout = html.Div(children=[
     html.H1('SpaceX Launch Records Dashboard',
             style={'textAlign': 'center', 'color': '#503D36', 'font-size': 40}),
     
-    # TASK 1: Dropdown for Launch Site selection
+    # Dropdown for Launch Site selection
     dcc.Dropdown(
         id='site-dropdown',
         options=[
@@ -33,13 +32,13 @@ app.layout = html.Div(children=[
     ),
     html.Br(),
 
-    # TASK 2: Pie chart for successful launches
+    # Pie chart for successful launches
     html.Div(dcc.Graph(id='success-pie-chart')),
     html.Br(),
 
     html.P("Payload Range (Kg):"),
     
-    # TASK 3: Range slider for payload selection
+    # Range slider for payload selection
     dcc.RangeSlider(
         id='payload-slider',
         min=0,
@@ -50,12 +49,12 @@ app.layout = html.Div(children=[
     ),
     html.Br(),
 
-    # TASK 4: Scatter plot for payload vs. success
+    # Scatter plot for payload vs. success
     html.Div(dcc.Graph(id='success-payload-scatter-chart')),
 ])
 
 
-# TASK 2: Callback for pie chart
+# Callback for pie chart
 @app.callback(
     Output('success-pie-chart', 'figure'),
     Input('site-dropdown', 'value')
@@ -71,7 +70,7 @@ def update_pie_chart(selected_site):
     return fig
 
 
-# TASK 4: Callback for scatter plot
+# Callback for scatter plot
 @app.callback(
     Output('success-payload-scatter-chart', 'figure'),
     [Input('site-dropdown', 'value'),
@@ -92,6 +91,6 @@ def update_scatter_chart(selected_site, payload_range):
     return fig
 
 
-# Run the app
+# Deploy
 if __name__ == '__main__':
     app.run_server(debug=True)
